@@ -171,14 +171,23 @@ section .title::after{
     height: 100%;
     width: 100%;
     place-items: center;
+    transform-style: preserve-3d;
+    transition: transform 1s;
 }
-.wrapper{
+
+.mapper{
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+}
+
+.wrapper {
     z-index: 700;
     position: fixed;
     display: none;
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 15px 20px rgba(0,0,0,0.1);
+    backface-visibility: hidden;
 }
 .wrapper .title {
     font-size: 35px;
@@ -238,6 +247,91 @@ form .field input:valid{
     border-color: #4158d0;
 }
 .wrapper form .field label{
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    color: #999999;
+    font-weight: 400;
+    font-size: 17px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+form .field input:focus ~ label,
+form .field input:valid ~ label{
+    top: 0;
+    font-size: 16px;
+    color: #4158d0;
+    background: #fff;
+    transform: translateY(-50%);
+}
+
+.mapper {
+    z-index: 700;
+    position: fixed;
+    display: none;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 15px 20px rgba(0,0,0,0.1);
+}
+.mapper .title {
+    font-size: 35px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 100px;
+    color: #fff;
+    user-select: none;
+    background: linear-gradient(127deg, #42133f, #1b1f34);
+}
+.mapper .close {
+    background: rgba(42, 39, 52);
+    border-radius: 5px 5px 0 0;
+}
+.mapper .close:hover{
+    cursor: pointer;
+}
+.mapper .close i{
+    color: rgba(255, 95, 86);
+}
+.mapper .close .back i{
+    color: rgba(248, 231, 28);
+}
+.mapper .close .forward i{
+    color: rgba(39, 201, 63);
+}
+.mapper form{
+    padding: 10px 30px 50px 30px;
+}
+.mapper form .field{
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.mapper form .field span{
+    flex: 1;
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+}
+.mapper form .field input{
+    flex: 5;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 17px;
+    padding-left: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+.mapper form .field input:focus,
+form .field input:valid{
+    border-color: #4158d0;
+}
+.mapper form .field label{
     position: absolute;
     top: 50%;
     left: 20px;
@@ -334,6 +428,8 @@ form .pass-link a:hover,
 form .signup-link a:hover{
     text-decoration: underline;
 }
+
+
 /*Home section styling*/
 .home{
     display: flex;
@@ -396,6 +492,7 @@ form .signup-link a:hover{
     width: 400px;
     object-fit: cover;
     border-radius: 8px;
+
 }
 .about .about-content .right{
     width: 55%;
@@ -749,9 +846,9 @@ form .signup-link a:hover{
     margin: 0 15px;
     cursor: pointer;
     transition: 0.5s;
-    box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.76);
-    -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.76);
-    -moz-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.76);
+    box-shadow: 0 0 8px 2px rgba(0,0,0,0.76);
+    -webkit-box-shadow: 0 0 8px 2px rgba(0,0,0,0.76);
+    -moz-box-shadow: 0 0 8px 2px rgba(0,0,0,0.76);
 }
 .fa-facebook-f{
     color: blue;

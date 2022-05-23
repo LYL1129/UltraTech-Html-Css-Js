@@ -10,7 +10,10 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="js/owl.carousel.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/items.js"></script>
 </head>
 <body>
 <!--vue 处理表单，原生js 矢量绘图 排版 -->
@@ -34,63 +37,100 @@
         </div>
     </nav>
 <!--wrapper about logo-form-->
-<div class="register" id="register">
-    <div id="login-form" class="login">
-        <div class="wrapper" id="wrapper">
-            <div class="close">
-                <span class="btn"><i class="fa-solid fa-circle-minus"></i></span>
-                <span class="back"><i class="fa-solid fa-circle-chevron-left"></i></span>
-                <span class="forward"><i class="fa-solid fa-circle-chevron-right"></i></span>
-            </div>
-            <div class="title">
-                <span class="text">Login Form</span>
+    <div class="register" id="register">
+        <div id="login-form" class="login">
+            <div class="wrapper" id="wrapper">
+                <div class="close">
+                    <span class="btn"><i class="fa-solid fa-circle-minus"></i></span>
+                    <span class="back"><i class="fa-solid fa-circle-chevron-left"></i></span>
+                    <span class="forward"><i class="fa-solid fa-circle-chevron-right"></i></span>
+                </div>
+                <div class="title">
+                    <span class="text">Login Form</span>
 
+                </div>
+                <form action="#">
+                    <div class="field">
+                        <input type="text" required>
+                        <label>Email Address</label>
+                    </div>
+                    <div class="field">
+                        <input type="password" id="pwd" required>
+                        <span class="fa-solid fa-eye" onclick="showed()" id="eye"></span>
+                        <label>Password</label>
+                    </div>
+
+                    <div class="content">
+                        <div class="checkbox">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <div class="pass-link">
+                            <a href="#">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="submit" value="Login">
+                    </div>
+                    <div class="signup-link">
+                        Not a member? <a href="#" onclick="openRegister()">Signup now</a>
+                    </div>
+                </form>
             </div>
-            <form action="#">
-                <div class="field">
-                    <input type="text" required>
-                    <label>Email Address</label>
+            <div class="mapper" id="mapper">
+                <div class="close">
+                    <span class="btn"><i class="fa-solid fa-circle-minus"></i></span>
+                    <span class="back"><i class="fa-solid fa-circle-chevron-left"></i></span>
+                    <span class="forward"><i class="fa-solid fa-circle-chevron-right"></i></span>
                 </div>
-                <div class="field">
-                    <input type="password" id="pwd" required>
-                    <span class="fa-solid fa-eye" onclick="showed()" id="eye"></span>
-                    <label>Password</label>
+                <div class="title">
+                    <span class="text">Sign up Form</span>
+
                 </div>
-                <div class="linkage">
-                    <div class="selector">
-                        <select  name="Province" id="province" onfocus="function1()" onchange="function2()">
-                            <option value="0">
-                                Select Province
-                            </option>
-                        </select>
+                <form action="#">
+                    <div class="field">
+                        <input type="text" required>
+                        <label>Email Address</label>
                     </div>
-                    <div class="selector">
-                        <select  name="City" id="city" >
-                            <option value="0">
-                                Select City
-                            </option>
-                        </select>
+                    <div class="field">
+                        <input type="password" id="pwd" required>
+                        <span class="fa-solid fa-eye" onclick="showed()" id="eye"></span>
+                        <label>Password</label>
                     </div>
-                </div>
-                <div class="content">
-                    <div class="checkbox">
-                        <input type="checkbox" id="remember-me">
-                        <label for="remember-me">Remember me</label>
+                    <div class="linkage" id="app">
+                        <div class="selector">
+
+                            <select v-model="province" @change="getCity">
+                                <option v-for="item in arr" :value="item.name">{{item.name}}</option>
+                            </select>
+
+                        </div>
+                        <div class="selector" >
+
+                            <select v-model="city" @change='getCounty'>
+                                <option v-for="item in cityArr" :value="item.name">{{item.name}}</option>
+                            </select>
+
+                        </div>
+                        <div class="selector" >
+                            <label>
+                                <select v-model="county">
+                                    <option v-for="item in countyArr" :value="item.name">{{item.name}}</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
-                    <div class="pass-link">
-                        <a href="#">Forgot password?</a>
+
+                    <div class="field">
+                        <input type="submit" value="Create your learner account">
                     </div>
-                </div>
-                <div class="field">
-                    <input type="submit" value="Login">
-                </div>
-                <div class="signup-link">
-                    Not a member? <a href="#">Signup now</a>
-                </div>
-            </form>
+                    <div class="signup-link">
+                        Already a user? <a href="#" onclick="openLogin()">Login now</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 <!--    Home section start-->
     <section class="home" id="home">
         <div class="max-width">
@@ -259,7 +299,38 @@
             </div>
         </div>
     </section>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            province: '',
+            city: '',
+            county: '',
+            arr: arrAll,
+            cityArr:[],
+            countyArr:[]
+        },
+        methods: {
 
+            getCounty() {
+                for (let i = 0; i < this.cityArr.length; i++) {
+                    const obj = this.cityArr[i];
+                    if (this.city === obj.name ) {
+                        this.countyArr = obj.sub;
+                    }
+                }
+            },
+            getCity() {
+                for (let i = 0; i < this.arr.length; i++) {
+                    let obj = this.arr[i]
+                    if (this.province === obj.name ) {
+                        this.cityArr = obj.sub;
+                    }
+                }
+            }
+        }
+    })
+</script>
 <script src="js/script.js"></script>
 </body>
 </html>

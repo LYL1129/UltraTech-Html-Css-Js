@@ -7,5 +7,6 @@
     <orderEntry type="library" name="jquery-1.11.0" level="application" />
     <orderEntry type="library" name="ce4a919978" level="application" />
     <orderEntry type="library" name="all" level="application" />
+    <orderEntry type="library" name="vue" level="application" />
   </component>
 </module>
